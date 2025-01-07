@@ -28,14 +28,13 @@ void main(List<String> arguments) async {
     }
 
     if (isDecreasing == isIncreasing) {
-      //Only one should ever be true at once
+      //these variables cannot be equal for the report to be considered safe
       continue;
     }
     if (maxAllowedDifferenceExceeded == true) {
       continue;
     }
     numOfSafeReports++;
-    //print(levels);
   }
   print(numOfSafeReports);
 }
