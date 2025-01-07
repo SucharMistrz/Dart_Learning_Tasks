@@ -2,8 +2,8 @@ import 'dart:io';
 
 void main(List<String> arguments) async {
 
-  File file = File('input_advent_of_code_day1.txt');
-  List<String> fileContent = await file.readAsLines();
+  File inputFile = File('input_advent_of_code_day1.txt');
+  List<String> fileContent = await inputFile.readAsLines();
   List<int> leftList = <int>[];
   List<int> rightList = <int>[];
 
@@ -14,19 +14,19 @@ void main(List<String> arguments) async {
       rightList.add(int.parse(splitString[1]));
     }
 
-  int rightListSummary = 0;
-  int leftListSummary = 0;
-  int answer = 0;
+  if (leftList.length != rightList.length)
+    {
+      //This should never happen, input must be incorrect
+      throw Error();
+    }
 
-  for (int element in rightList)
+  leftList.sort();
+  rightList.sort();
+
+  int totalDistance = 0;
+  for (int i = 0; i < leftList.length ; i++)
     {
-      rightListSummary += element;
+      totalDistance += (leftList[i] - rightList[i]).abs();
     }
-  for (int element in leftList)
-    {
-      leftListSummary += element;
-    }
-  print('\n$rightListSummary');
-  print('\n$leftListSummary\n');
-  print(answer = (rightListSummary - leftListSummary).abs());
+  print(totalDistance);
 }
