@@ -2,7 +2,7 @@ import 'dart:io';
 
 void main(List<String> arguments) async {
 
-  File file = File('input.txt');
+  File file = File('input_advent_of_code_day1.txt');
   List<String> fileContent = await file.readAsLines();
   List<int> leftList = <int>[];
   List<int> rightList = <int>[];
