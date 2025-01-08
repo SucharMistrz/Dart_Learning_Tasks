@@ -1,7 +1,7 @@
 import 'dart:io';
 
-bool isReportSafe(List<int> levels, {required bool calledAfterDampening})  {
-
+//this function makes sure the provided list meets all the requirements
+bool isReportSafe(List<int> levels, {required bool calledAfterDampening}) {
   bool isIncreasing = false;
   bool isDecreasing = false;
   bool maxAllowedDifferenceExceeded = false;
@@ -20,28 +20,28 @@ bool isReportSafe(List<int> levels, {required bool calledAfterDampening})  {
       maxAllowedDifferenceExceeded = true;
     }
 
+    //the first two booleans below cannot be equal for the report to be considered safe
     if (isDecreasing == isIncreasing || maxAllowedDifferenceExceeded == true) {
-      if (calledAfterDampening == true)
-        {
+      //An element has already been removed from that list, we do not want to do it again as only one bad level may be ignored
+      if (calledAfterDampening == true) {
+        return false;
+      } else {
+        if (isReportSafeAfterDampening(levels) == false) {
           return false;
         }
-      else
-        {
-          if (isReportSafeAfterDampening(levels) == false)
-            {
-              return false;
-            }
-        }
+      }
     }
   }
   return true;
 }
 
-bool isReportSafeAfterDampening(List<int> originalLevels)
-{
+//if a list does not meet the requirements, this function modifies the list by deleting one element
+//and then sends the modified list for a reanalysis
+bool isReportSafeAfterDampening(List<int> originalLevels) {
   for (int i = 0; i < originalLevels.length; i++) {
-    List<int> dampenedLevels = <int>[...originalLevels]
-      ..removeAt(i);
+    //according to the requirements, one bad level may exist
+    //so we check if there is such a version of the list which meets the requirements if any of the elements was deleted
+    List<int> dampenedLevels = <int>[...originalLevels]..removeAt(i);
 
     if (isReportSafe(dampenedLevels, calledAfterDampening: true) == true) {
       return true;
@@ -55,10 +55,11 @@ void main(List<String> arguments) async {
   List<String> fileContent = await inputFile.readAsLines();
 
   int numOfSafeReports = 0;
+
   for (String line in fileContent) {
     List<int> splitLines = line.split(' ').map(int.parse).toList();
 
-    if (isReportSafe(splitLines, calledAfterDampening: false) == true){
+    if (isReportSafe(splitLines, calledAfterDampening: false) == true) {
       numOfSafeReports++;
     }
   }
