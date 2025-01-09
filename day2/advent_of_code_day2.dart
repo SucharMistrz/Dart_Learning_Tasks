@@ -51,7 +51,7 @@ bool isReportSafeAfterDampening(List<int> originalLevels) {
 }
 
 void main(List<String> arguments) async {
-  File inputFile = File('input_advent_of_code_day2.txt');
+  File inputFile = File('input.txt');
   List<String> fileContent = await inputFile.readAsLines();
 
   int numOfSafeReports = 0;
