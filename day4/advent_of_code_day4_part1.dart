@@ -1,6 +1,15 @@
 import 'dart:core';
 import 'dart:io';
 
+bool isPalindrome(String word) {
+  for (int i = 0; i < word.length ~/ 2; i++) {
+    if (word[i] != word[word.length - i - 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 int findKeyword(List<String> fileContent, String keyword, int column, int row,
     {required bool goUp,
     required bool goDown,
@@ -126,5 +135,10 @@ void main(List<String> arguments) async {
           goUp: goUp, goDown: goDown, goLeft: goLeft, goRight: goRight);
     }
   }
-  print(numberOfFoundWords);
+
+  if (!isPalindrome(keyword)) {
+    print(numberOfFoundWords);
+  } else {
+    print(numberOfFoundWords / 2);
+  }
 }
